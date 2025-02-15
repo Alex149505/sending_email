@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 LOGIN=os.getenv('LOGIN')
 PASSWORD=os.getenv('PASSWORD')
-print("Hello world")
 logging.info("""Привет, %friend_name%! %my_name% приглашает тебя на сайт %website%!.
 
 %website% — это новая версия онлайн-курса по программированию. 
@@ -23,11 +22,14 @@ logging.info("""Привет, %friend_name%! %my_name% приглашает те
 Регистрируйся → %website%
 На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл.""".replace("%website%","https://dvmn.org/profession-ref-program/id507018210/DLO5k/").replace("%friend_name%","Петр").replace("%my_name%","Александр"))
 
-friend_Name = "Петр"
+recipient_name = "Петр"
 sender_name = "Александр"
 website_link = "https://dvmn.org/profession-ref-program/id507018210/DLO5k/"
-letter = """From: alexandarvarfolomeev@yandex.ru
-To: alex1995599105@gamil.com
+sender_email = "alexandarvarfolomeev@yandex.ru"
+recipient_email = "alex1995599105@gmail.com"
+
+letter = """From: {sender_email}
+To: {recipient_email} 
 Subject: Приглашение!
 Content-Type: text/plain; charset="UTF-8";
 
@@ -46,11 +48,11 @@ Content-Type: text/plain; charset="UTF-8";
 Все проекты — они же решение наших задачек — можно разместить на твоём GitHub. Работодатели такое оценят. 
 
 Регистрируйся → {2}  
-На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл""".format(friend_name, sender_name, website_link)
+На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл""".format(recipient_name, sender_name, website_link, sender_email = sender_email, recipient_email = recipient_email)
 letter = letter.encode("UTF-8")
 server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
 server.login(LOGIN, PASSWORD)
-server.sendmail("alexandarvarfolomeev@yandex.ru", "alex1995599105@gmail.com", letter)
+server.sendmail(sender_email, recipient_email, letter)
 server.quit()
 
 
